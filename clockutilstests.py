@@ -49,6 +49,15 @@ class ClockUtilsTests(unittest.TestCase):
 
     def test_0630(self):
        self.assertEqual(15, hand_angle(06,30))
+       
+    def test_0600(self):
+        self.assertEqual(180, hand_angle(06, 00))
+        
+    def test_0700(self):
+        self.assertEqual(150, hand_angle(07, 00))
+        
+    def test_0915(self):
+        self.assertEqual(172.5, hand_angle(9, 15))
          
 if __name__ == "__main__":
     unittest.main()

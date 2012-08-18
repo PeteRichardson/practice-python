@@ -18,7 +18,8 @@ def hour_angle(hour, minute):
     ''' angle of the integer hour + amount past the hour because of minutes'''
     return (integer_hour_angle(hour) + hour_delta_caused_by_minute(minute))
     
-
 def hand_angle(hour, minute):    
-    return abs(hour_angle(hour, minute) - minute_angle(minute))
-
+    angle = abs(hour_angle(hour, minute) - minute_angle(minute))
+    if angle > 180:
+        angle = 360 - angle
+    return angle
