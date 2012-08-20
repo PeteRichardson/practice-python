@@ -2,8 +2,8 @@
 
 ''' ClockUtils.py - Utility functions related to clocks'''
 
-DEGREES_PER_MINUTE = 360/60.0
-DEGREES_PER_HOUR   = 360/12.0
+DEGREES_PER_MINUTE = 360/60.0   # degrees of the full circle taken up by each minute
+DEGREES_PER_HOUR   = 360/12.0   # degrees of the full circle taken up by each hour
 
 def minute_angle(minute):
     return (DEGREES_PER_MINUTE * minute) % 360  # degrees = degrees per minute * minutes
