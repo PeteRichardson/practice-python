@@ -16,7 +16,7 @@ class Stack:
         self.stack.insert(0, item)
 
     def pop(self):
-        '''Remove the top item from the top of the stack 
+        '''Remove the top item from the top of the stack
            and return it'''
         answer = self.peek()
         self.stack = self.stack[1:]
@@ -60,7 +60,6 @@ class TestStack(unittest.TestCase):
         self.assertEqual(1, s.count())
         s.push("Two")
         self.assertEqual(2, s.count())
-        kk
 
 
 if __name__ == "__main__":
