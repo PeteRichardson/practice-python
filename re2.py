@@ -3,21 +3,24 @@
 from collections import Counter
 
 
-def count_chars(input_file):
-    '''return a collections.Counter with char counts for the
-       specified file'''
-    chars = Counter()
+def count_items(input_file, strategy):
+    '''return a collections.Counter with item counts for the
+       specified file, where items are parsed from a line
+       using the given strategy funciton'''
+    items = Counter()
     for l in open(options.input_file, "r"):
-        chars.update(l.strip())
-    return chars, "Chars"
+        items.update(strategy(l))
+    return items
 
-def count_words(input_file):
-    '''return a collections.Counter with word counts for the
-       specified file'''
-    words = Counter()
-    for l in open(options.input_file, "r"):
-        words.update(l.strip().split())
-    return words, "Words"
+
+def count_chars(line):
+    '''return a chars in a line'''
+    return(line.strip())
+
+
+def count_words(line):
+    '''return words in a line'''
+    return(line.strip().split())
 
 
 def get_options():
@@ -36,10 +39,14 @@ def print_report(char_counter, options, item_type):
     for char, count in char_counter.most_common(options.n):
         print "%7d: %s" % (count, char)
 
+
+def do_one_strategy(input_file, strategy, item_type):
+    items = count_items(options.input_file, count_chars)
+    print_report(items, options, item_type)
+
+
 if __name__ == '__main__':
     options, args = get_options()
-    items, item_type = count_chars(options.input_file)
-    print_report(items, options, item_type)
-    print "-----------------"
-    items, item_type = count_words(options.input_file)
-    print_report(items, options, item_type)
+    for strategy, item_type in [(count_chars, "Chars"),
+                                (count_words, "Words")]:
+        do_one_strategy(options.input_file, strategy, item_type)
