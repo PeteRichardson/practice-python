@@ -3,24 +3,22 @@
 from collections import Counter
 
 
-def count_items(input_file, strategy):
-    '''return a collections.Counter with item counts for the
-       specified file, where items are parsed from a line
-       using the given strategy funciton'''
-    items = Counter()
-    for l in open(options.input_file, "r"):
-        items.update(strategy(l))
-    return items
+class Count_Chars():
+    item_type = "Chars"
+
+    @staticmethod
+    def split_line(line):
+        '''return chars in a line'''
+        return line
 
 
-def count_chars(line):
-    '''return a chars in a line'''
-    return(line.strip())
+class Count_Words():
+    item_type = "Words"
 
-
-def count_words(line):
-    '''return words in a line'''
-    return(line.strip().split())
+    @staticmethod
+    def split_line(line):
+        '''return words in a line'''
+        return line.split()
 
 
 def get_options():
@@ -40,13 +38,16 @@ def print_report(char_counter, options, item_type):
         print "%7d: %s" % (count, char)
 
 
-def do_one_strategy(input_file, strategy, item_type):
-    items = count_items(options.input_file, count_chars)
-    print_report(items, options, item_type)
+def count_items(input_file, strategy):
+    items = Counter()
+    for l in open(options.input_file, "r"):
+        items.update(strategy.split_line(l.strip()))
+    print_report(items, options, strategy.item_type)
 
 
 if __name__ == '__main__':
     options, args = get_options()
-    for strategy, item_type in [(count_chars, "Chars"),
-                                (count_words, "Words")]:
-        do_one_strategy(options.input_file, strategy, item_type)
+    counting_strategies = [Count_Chars, Count_Words]
+
+    for counting_strategy in counting_strategies:
+        count_items(options.input_file, counting_strategy)
