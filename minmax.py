@@ -4,7 +4,6 @@
     from an input file of integers'''
 
 
-from pprint import pprint
 import logging
 import unittest
 
@@ -35,7 +34,7 @@ def get_minmax(ints):
             continue
 
         # new direction = +1, 0 or -1
-        new_direction = (next - current)/abs(next - current)
+        new_direction = (next - current) / abs(next - current)
         if is_min(old_direction, new_direction):
             results.append((location, current, "MIN"))
         elif is_max(old_direction, new_direction):
@@ -50,36 +49,36 @@ def get_minmax(ints):
 class Test_minmax(unittest.TestCase):
 
     def test_simplemax(self):
-        ints = [4,5,4]
+        ints = [4, 5, 4]
         results = get_minmax(ints)
         self.assertEqual(results, [(1, 5, "MAX")])
 
     def test_simplemin(self):
-        ints = [4,3,4]
+        ints = [4, 3, 4]
         results = get_minmax(ints)
         self.assertEqual(results, [(1, 3, "MIN")])
 
     def test_allsame(self):
-        ints = [4,4,4]
+        ints = [4, 4, 4]
         results = get_minmax(ints)
         self.assertEqual(results, [])
 
     def test_allincreasing(self):
-        ints = [3,4,5]
+        ints = [3, 4, 5]
         results = get_minmax(ints)
         self.assertEqual(results, [])
 
     def test_alldecreasing(self):
-        ints = [5,4,3]
+        ints = [5, 4, 3]
         results = get_minmax(ints)
         self.assertEqual(results, [])
 
     def test_complex(self):
-        ints = [5,7,9,8,5,4,2,1,5,6]
+        ints = [5, 7, 9, 8, 5, 4, 2, 1, 5, 6]
         results = get_minmax(ints)
-        self.assertEqual(results, [(2,9,"MAX"), (7,1,"MIN")])
+        self.assertEqual(results, [(2, 9, "MAX"), (7, 1, "MIN")])
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
+    #logging.basicConfig(level=logging.DEBUG)
     unittest.main()
