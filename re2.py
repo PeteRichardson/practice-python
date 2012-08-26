@@ -1,18 +1,10 @@
 #!/usr/bin/env python
 
-import re
-import hashlib
-from collections import defaultdict
+from collections import Counter
 
 
-words = defaultdict(int)
+words = Counter()
 for l in open("changes.py", "r"):
-    #if re.search("project\.", l):
-    l = l.strip()
-    for token in l.split():
-        words[token] += 1
-    hash = hashlib.sha1(l)
-    print hash.hexdigest(), l
-print "-------------------------------"
-for word in sorted(words, key=words.get, reverse = True):
-    print "%4d: %s" % (words[word], word)
+    words.update(l.split())
+for word, count in words.most_common(10):
+    print "%4d: %s" % (count, word)
