@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-from collections import Counter
-
 
 class Count_Chars():
     item_type = "Chars"
@@ -28,26 +26,33 @@ def get_options():
     parser.add_option('-n', dest="n", default=5, action="store")
     parser.add_option('-f', '--file', dest="input_file",
         default="/usr/share/dict/words", action="store")
-    return parser.parse_args()
+    options = parser.parse_args()[0]
+    return options.input_file, options.n
 
 
-def print_report(char_counter, options, item_type):
+def print_report(items, input_file, item_type):
     '''dump the most popular items in a counter'''
-    print "Top %d Popular %s in %s" % (options.n, item_type, options.input_file)
-    for char, count in char_counter.most_common(options.n):
+    item_count = len(items)
+    print "Top %d Popular %s in %s" % (item_count, item_type, input_file)
+    for char, count in items:
         print "%7d: %s" % (count, char)
 
 
-def count_items(input_file, strategy):
+def top_n_items(input_file, n, strategy):
+    ''' Do the real counting work.   This is the only
+        function that knows we're using collections.Counter'''
+    from collections import Counter
+
     items = Counter()
-    for l in open(options.input_file, "r"):
-        items.update(strategy.split_line(l.strip()))
-    print_report(items, options, strategy.item_type)
+    for l in open(input_file, "r"):
+            items.update(strategy.split_line(l.strip()))
+    return items.most_common(n)
 
 
 if __name__ == '__main__':
-    options, args = get_options()
+    file, n = get_options()
     counting_strategies = [Count_Chars, Count_Words]
 
     for counting_strategy in counting_strategies:
-        count_items(options.input_file, counting_strategy)
+        items = top_n_items(file, n, counting_strategy)
+        print_report(items, file, counting_strategy.item_type)
