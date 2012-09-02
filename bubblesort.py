@@ -8,8 +8,8 @@ from pprint import pformat
 
 
 def bubblesort(data):
-    # repeat until it's sorted
-    #     take two elements and swap them if they're out of order
+    '''repeat until it's sorted
+        take two elements and swap them if they're out of order'''
     if len(data) <= 1:
         return data
     else:
@@ -17,35 +17,42 @@ def bubblesort(data):
         while swapped_one == True:
             logging.debug("Another pass...")
             swapped_one = False
-            for n in range(0, len(data) - 1):
-                logging.debug(pformat([data[n], data[n + 1]]))
-                if (data[n] > data[n + 1]):
+            for item in range(0, len(data) - 1):
+                logging.debug(pformat([data[item], data[item + 1]]))
+                if (data[item] > data[item + 1]):
                     swapped_one = True
-                    data[n], data[n + 1] = data[n + 1], data[n]
+                    data[item], data[item + 1] = data[item + 1], data[item]
         return data
 
 
-class test_bubblesort(unittest.TestCase):
+class TestBubblesort(unittest.TestCase):
+    '''testcases for bubblesort routine'''
 
     def sort_one(self, data):
+        '''compare bubblesort results with sorted() results'''
         result = bubblesort(data)
         self.assertEqual(result, sorted(data))
 
     def test_simple(self):
+        '''sort a simple small list'''
         self.sort_one([2, 1, 3])
 
     def test_one(self):
+        '''sort a one element list'''
         self.sort_one([1])
 
     def test_none(self):
+        '''sort an empty list'''
         self.sort_one([])
 
     def test_even(self):
+        '''sort an even number of items'''
         self.sort_one([4, 3, 2, 1])
 
     def test_odd(self):
+        '''sort an odd number of items'''
         self.sort_one([5, 4, 3, 2, 1])
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
+    #logging.basicConfig(level=logging.DEBUG)
     unittest.main()
