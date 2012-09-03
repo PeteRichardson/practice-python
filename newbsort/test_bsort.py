@@ -3,6 +3,7 @@
 '''unit tests for bubblesort'''
 
 import unittest
+import logging
 from bsort import bubblesort
 
 
@@ -50,5 +51,7 @@ class Test_Bubblesort(unittest.TestCase):
         self.assertEqual(after, sorted(array))
 
 if __name__ == "__main__":
+
+    logging.basicConfig(level=logging.DEBUG)
     unittest.main()
 
