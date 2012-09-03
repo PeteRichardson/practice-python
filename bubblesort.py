@@ -10,7 +10,7 @@ from pprint import pformat
 def bubblesort(data):
     '''repeat until it's sorted
         take two elements and swap them if they're out of order'''
-    if len(data) <= 1:
+    if data == None or len(data) <= 1:
         return data
     else:
         swapped_one = True
@@ -44,6 +44,11 @@ class TestBubblesort(unittest.TestCase):
     def test_none(self):
         '''sort an empty list'''
         self.sort_one([])
+
+    def test_real_None(self):
+        ''' pass None to sort.  Shouldn't fail! '''
+        result = bubblesort(None)
+        self.assertEqual(result, None)
 
     def test_even(self):
         '''sort an even number of items'''
