@@ -40,7 +40,7 @@ class Changes(Command, MirrorSafeCommand):
         def cmd(option, opt_str, value, parser):
             setattr(parser.values, option.dest, list(parser.rargs))
             while parser.rargs:
-            del parser.rargs[0]
+                del parser.rargs[0]
 
         g = p.add_option_group('Output')
         g.add_option('-v', '--verbose',
