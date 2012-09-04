@@ -3,7 +3,7 @@
 ''' test_stack.py - tests for the stack class'''
 
 import unittest
-from pcollections.stack import Stack
+from stack import Stack
 
 
 class TestStack(unittest.TestCase):
