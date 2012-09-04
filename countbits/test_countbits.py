@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+ #!/usr/bin/env python
 
 ''' test_countbits.py - test cases for countbits functions '''
 
@@ -20,7 +20,7 @@ class TestCountbits(unittest.TestCase):
 
     def test_all(self):
         ''' count bits in lots of numbers '''
-        for n in range(0, 2**18):
+        for n in range(0, 2**5):
             self.assertEqual(countbits(n), countbits2(n))
 
 
