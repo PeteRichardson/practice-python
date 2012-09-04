@@ -1,44 +1,50 @@
 #!/usr/bin/env python
 
 import unittest
-from ll import LinkedList
+from pcollections.linkedlist import LinkedList
 
 
 class LinkedListTest(unittest.TestCase):
+    '''Test cases for linked lists'''
     def test_create(self):
-        list = LinkedList(50)
-        self.assertEqual(None, list.next)
-        self.assertEqual(50, list.value)
+        '''Create a simple linked list'''
+        alist = LinkedList(50)
+        self.assertEqual(None, alist.next)
+        self.assertEqual(50, alist.value)
 
     def test_insert(self):
-        list = LinkedList(25)
-        list.insert(34)
-        self.assertEqual(34, list.value)
-        self.assertEqual(25, list.next.value)
-        self.assertEqual(None, list.next.next)
+        '''Insert an item into a linked list'''
+        alist = LinkedList(25)
+        alist.insert(34)
+        self.assertEqual(34, alist.value)
+        self.assertEqual(25, alist.next.value)
+        self.assertEqual(None, alist.next.next)
 
     def test_pop(self):
-        list = LinkedList(25)
-        self.assertEqual(25, list.value)
-        list.insert(34)
-        self.assertEqual(34, list.value)
-        value = list.pop()
+        '''Pop an item from a linked list'''
+        alist = LinkedList(25)
+        self.assertEqual(25, alist.value)
+        alist.insert(34)
+        self.assertEqual(34, alist.value)
+        value = alist.pop()
         self.assertEqual(34, value)
-        self.assertEqual(25, list.value)
+        self.assertEqual(25, alist.value)
 
     def test_append(self):
-        list = LinkedList(17)
-        self.assertEqual(17, list.value)
-        list.append(99)
-        self.assertEqual(17, list.value)
-        self.assertEqual(99, list.next.value)
+        '''Append an item to a linked list'''
+        alist = LinkedList(17)
+        self.assertEqual(17, alist.value)
+        alist.append(99)
+        self.assertEqual(17, alist.value)
+        self.assertEqual(99, alist.next.value)
 
     def test_find(self):
-        list = LinkedList(1)
-        list.append(2)
-        list.append(3)
-        list.append(4)
-        search_result = list.find(3)
+        '''Find an item in a linked list'''
+        alist = LinkedList(1)
+        alist.append(2)
+        alist.append(3)
+        alist.append(4)
+        search_result = alist.find(3)
         self.assertEqual(3, search_result.value)
         self.assertEqual(4, search_result.next.value)
 
