@@ -3,6 +3,9 @@
 from pprint import pformat
 from datetime import datetime
 
+class OverdrawnError(RuntimeError):
+    pass
+
 class BankAccountHistory:
     def __init__(self, starting_balance=0):
         self.list = []
@@ -33,6 +36,8 @@ class BankAccount:
     def withdraw(self, amount):
         if amount < 0:
             raise RuntimeError("bad withdrawal amount")
+        if amount > self.balance:
+            raise OverdrawnError()
         self.balance -= amount
         self.history.log("Withdraw", amount, self.balance)
 
