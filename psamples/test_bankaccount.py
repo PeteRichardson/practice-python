@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+'''test_bankaccount.py - tests for bank account module'''
 
 import unittest
 
@@ -17,6 +18,12 @@ class BankAccountTest(unittest.TestCase):
         self.account = BankAccount(45)
         self.account.deposit(10)
         self.assertEqual(self.account.balance, 55)
+
+    def testWithdrawal(self):
+        '''BankAcount - test withdrawal'''
+        self.account = BankAccount(18)
+        self.account.withdraw(16)
+        self.assertEqual(self.account.balance, 2)
 
 
 if __name__ == "__main__":
