@@ -12,9 +12,9 @@ class BankAccountHistoryTest(unittest.TestCase):
     def test_simple(self):
         self.bah = BankAccountHistory()
         self.bah.log("foo", 45.00, 45.00)
-        self.assertEqual(45.00, self.bah.list[0][2])
+        self.assertEqual(45.00, self.bah.list[1][2])
         self.bah.log("deposit", 90.00, 135.00)
-        self.assertEqual(135.00, self.bah.list[1][3])
+        self.assertEqual(135.00, self.bah.list[2][3])
 
 class BankAccountTest(unittest.TestCase):
     '''Tests for BankAccount class'''
