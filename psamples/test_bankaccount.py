@@ -2,8 +2,19 @@
 '''test_bankaccount.py - tests for bank account module'''
 
 import unittest
-
+import datetime
 from bankaccount import BankAccount
+from bankaccount import BankAccountHistory
+
+class BankAccountHistoryTest(unittest.TestCase):
+    '''Tests for BankAccountHistory'''
+
+    def test_simple(self):
+        self.bah = BankAccountHistory()
+        self.bah.log("foo", 45.00, 45.00)
+        self.assertEqual(45.00, self.bah.list[0][2])
+        self.bah.log("deposit", 90.00, 135.00)
+        self.assertEqual(135.00, self.bah.list[1][3])
 
 class BankAccountTest(unittest.TestCase):
     '''Tests for BankAccount class'''
