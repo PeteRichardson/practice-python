@@ -16,7 +16,9 @@ class Node:
         return (dleft, dright)
 
     def depth(self):
+        ''' my depth is max depth of my children + 1'''
         return max(self.depths()) + 1
 
     def is_balanced(self):
+        ''' I'm balanced if depths of my children differ by <= 1'''
         return abs(self.depths()[0] - self.depths()[1]) <= 1
