@@ -21,4 +21,4 @@ class Node:
 
     def is_balanced(self):
         ''' I'm balanced if depths of my children differ by <= 1'''
-        return abs(self.depths()[0] - self.depths()[1]) <= 1
+        return abs(max(self.depths()) - min(self.depths())) <= 1
