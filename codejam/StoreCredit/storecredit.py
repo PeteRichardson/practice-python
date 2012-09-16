@@ -1,6 +1,5 @@
 ''' storecredit.py - code for google code jam Store Credit problem '''
 
-
 class Case:
     def __init__(self, threelines):
         #pdb.set_trace()
@@ -10,6 +9,7 @@ class Case:
         self.solution = None
 
     def solve(self):
+        ''' find pair of items whose prices add up to C '''
         needs = {}
         for i in range(len(self.P)):
             price = self.P[i]
