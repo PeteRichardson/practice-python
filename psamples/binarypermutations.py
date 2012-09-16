@@ -27,16 +27,9 @@ class BinaryPermutator:
             return []
 
         result = []
-        logger.debug("self.qcount = %d", self.qcount)
-        logger.debug("self.statics = %s" % pformat(self.statics))
         for perm in range(2 ** self.qcount):
-            logger.debug("perm = %s", perm)
             permstr = "{0:0{width}b} ".format(perm, width=self.qcount)
-            logger.debug("permstr = %s" % permstr)
-            z = zip(self.statics, permstr)
-            logger.debug("z = %s" % pformat(z))
-            res = ''.join(["%s%s" % pair for pair in z]).strip()
-            logger.debug("res = %s" % res)
+            res = ''.join(["%s%s" % pair for pair in zip(self.statics, permstr)]).strip()
             result.append(res)
         return result
 
