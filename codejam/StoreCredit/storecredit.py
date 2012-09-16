@@ -14,7 +14,7 @@ class Case:
         for i in range(len(self.P)):
             price = self.P[i]
             #print "price =", price, 
-            if needs.has_key(price):
+            if price in needs:
                 self.solution = [needs[price], i + 1]
                 #print "Found a solution!", self.solution
                 return
