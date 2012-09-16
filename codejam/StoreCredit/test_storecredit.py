@@ -40,6 +40,5 @@ class Test_StoreCredit(unittest.TestCase):
         self.assertEqual(store.cases[2].solution, [4, 5])
 
 
-
 if __name__ == '__main__':
     unittest.main()
