@@ -40,8 +40,7 @@ class LinkedList(Node):
 		end = self
 		while end.next != None:
 			end = end.next
-		newend = Node(value)
-		end.next = newend
+		end.next = Node(value)
 
 	def remove(self, value):
 		target = self
