@@ -8,42 +8,43 @@ from random import random
 from Queue import Queue
 
 
-def my_sleep(max):
-    delay = random() * max
-    sleep(delay)
-    return delay
+def sleep_random(max_sleep):
+    '''Sleep a random amount up to max_sleep'''
+    my_delay = random() * max_sleep
+    sleep(my_delay)
+    return my_delay
 
 
 class Worker(threading.Thread):
     '''Some work to do in a thread'''
     MAX_SLEEP = 2
 
-    def __init__(self, tnum, queue):
+    def __init__(self, thread_num, queue):
         threading.Thread.__init__(self)
         self.queue = queue
-        self.name = "Worker {}".format(tnum)
+        self.name = "Worker {}".format(thread_num)
 
     def run(self):
-        logger.info("Created {}".format(self.name))
+        LOGGER.info("Created {}".format(self.name))
         delay = 0
         if self.queue.qsize() == 0:
-            logger.debug("\tqueue is empty.  Going to sleep...")
-            delay = my_sleep(self.MAX_SLEEP)
-        logger.debug("\twaking up after {:.2f} seconds".format(delay))
-        logger.info("Hello, {}. depth: {}".format(self.name, self.queue.qsize()))
+            LOGGER.debug("\tqueue is empty.  Going to sleep...")
+            delay = sleep_random(self.MAX_SLEEP)
+        LOGGER.debug("\t{} waking up after {:.2f} seconds".format(self.name, delay))
+        LOGGER.info("Hi, {}. depth: {}".format(self.name, self.queue.qsize()))
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
-    logger = logging.getLogger()
+    logging.basicConfig(level=logging.INFO)
+    LOGGER = logging.getLogger()
 
-    queue = Queue()
+    QUEUE = Queue()
  
     for tnum in range(4):
-        t = Worker(tnum, queue)
+        t = Worker(tnum, QUEUE)
         t.start()
 
     for item in range(5):
-        delay = my_sleep(1)
+        delay = sleep_random(1)
         msg = "Hello"
-        queue.put(msg)
-        logger.info("Added {} to queue".format(msg))
+        QUEUE.put(msg)
+        LOGGER.info("Added {} to queue".format(msg))
