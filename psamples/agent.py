@@ -55,11 +55,6 @@ class Agent(threading.Thread):
             if message.agent not in self.greeted:
                 self.greet(message.agent)
 
-def main():
-    '''do a basic functional test'''
-    pete = Agent("Pete")
-    pete.say_something()
-
-
 if __name__ == "__main__":
-    main()
+    import unittest
+    unittest.main("test_agent")
