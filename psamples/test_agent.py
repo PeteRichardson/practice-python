@@ -26,7 +26,7 @@ class Test_Agent(unittest.TestCase):
     def test_speaking(self):
         '''Can it speak?'''
         chuck = Agent("Chuck")
-        phrase = chuck.say_something()
+        phrase = chuck.pick_greeting()
         self.assertNotEqual(0, len(phrase))
 
     def test_hearing(self):
@@ -45,6 +45,19 @@ class Test_Agent(unittest.TestCase):
         wendy.start()
         self.assertEqual(1, pete.heard)
 
+    def test_lots_of_folks(self):
+        '''Can lots of agents talk?'''
+        logger.debug("test_lots_of_folks")
+        names = ['Pete', 'Wendy', 'Katherine', 'Newton', 'Zoe', 'Kitty Boo-Boo']
+        agents = [Agent(name) for name in names]
+        agents[0].greet(agents[1])
+        for agent in agents:
+            logger.debug( "ztarted {}".format(agent.name))
+            agent.start()
+
+#logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger()
+
+
 if __name__ == "__main__":
-    #logging.basicConfig(level=logging.DEBUG)
     unittest.main()

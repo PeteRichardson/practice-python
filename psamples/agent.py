@@ -30,19 +30,21 @@ class Agent(threading.Thread):
         self.greeted = set()
         self.heard = 0
         self.said = 0
+        LOGGER.debug("created {}".format(self.name))
 
-    def say_something(self):
+    def pick_greeting(self):
         '''print out a random message'''
         return self.phrases[int(random() * 4)]
 
     def greet(self, who):
         '''Say Hello to someone else'''
-        phrase = self.say_something()
+        phrase = self.pick_greeting()
         LOGGER.debug("{:5} to {:5}: {}".format(self.name, who.name, phrase))
         msg = Message(self, phrase)
         who.hear(msg)
         self.said += 1
         self.greeted.add(who)
+        LOGGER.debug("greeted {}".format(who.name))
 
     def hear(self, message):
         '''Receive a message from someone else'''
@@ -50,10 +52,17 @@ class Agent(threading.Thread):
         self.heard += 1
 
     def start(self):
-        while len(self.need_responses) > 0:
+        '''See if anyone has greeted us.  if so, respond,
+           but only once!'''
+        LOGGER.debug("Started {}".format(self.name))
+        while not self.is_idle():
             message = self.need_responses.pop()
             if message.agent not in self.greeted:
                 self.greet(message.agent)
+
+    def is_idle(self):
+        '''Need to respond to anyone?'''
+        return len(self.need_responses) == 0
 
 if __name__ == "__main__":
     import unittest
