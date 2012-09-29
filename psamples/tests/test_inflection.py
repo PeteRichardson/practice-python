@@ -1,6 +1,6 @@
 '''Test cases for inflectionpoints.py'''
 import unittest
-from inflectionpoints import InflectionPointFinder
+from ..inflectionpoints import InflectionPointFinder
 
 
 class InflectionTest(unittest.TestCase):

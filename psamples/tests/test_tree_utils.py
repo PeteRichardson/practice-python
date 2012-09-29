@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from tree_utils import Node
+from ..tree_utils import Node
 
 
 class Test_Node(unittest.TestCase):

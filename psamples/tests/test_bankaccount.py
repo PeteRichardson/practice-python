@@ -2,9 +2,8 @@
 '''test_bankaccount.py - tests for bank account module'''
 
 import unittest
-import datetime
-from bankaccount import BankAccount
-from bankaccount import BankAccountHistory
+from ..bankaccount import BankAccount
+from ..bankaccount import BankAccountHistory
 
 class BankAccountHistoryTest(unittest.TestCase):
     '''Tests for BankAccountHistory'''

@@ -2,7 +2,7 @@
 
 import unittest
 import logging
-from binarypermutations import BinaryPermutator
+from ..binarypermutations import BinaryPermutator
 
 
 class Test_binarypermutations(unittest.TestCase):

@@ -3,7 +3,7 @@
 ''' test_allmult.py - unittests for allmult.py '''
 
 import unittest
-from mult_utils import all_mult, mult_half
+from ..mult_utils import all_mult, mult_half
 
 
 class Test_Allmult(unittest.TestCase):
