@@ -13,11 +13,18 @@ class Test_Agent(unittest.TestCase):
         agent = Agent("Bond")
         self.assertEqual("Bond", agent.name)
 
-    def test_phrase(self):
+    def test_speaking(self):
         '''Can it speak?'''
         chuck = Agent("Chuck")
-        speech = chuck.say_something()
-        self.assertEqual("Chuck:", speech[:6])
+        phrase = chuck.say_something()
+        self.assertNotEqual(0, len(phrase))
+
+    def test_hearing(self):
+        '''Can it hear?'''
+        amy = Agent("Amy")
+        msg = "Are you listening?"
+        amy.hear(msg)
+        self.assertEqual(amy.need_responses, [msg])
 
 if __name__ == "__main__":
     unittest.main()
