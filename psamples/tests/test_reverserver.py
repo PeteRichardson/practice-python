@@ -1,6 +1,10 @@
 ''' test_reverserver.py '''
 
 import unittest
+import sys
+import os
+sys.path.append(os.path.join(sys.path[0], '..'))
+
 from reverserver import ReverServer
 from xmlrpclib import ServerProxy
 import threading
