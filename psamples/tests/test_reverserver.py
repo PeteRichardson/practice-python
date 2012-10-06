@@ -10,7 +10,7 @@ class ServerThread(threading.Thread):
     '''run a ReverServer in a separate thread'''
 
     def run(self):
-        ReverServer("localhost", 6666).start()
+        ReverServer("localhost", 6666, logRequests=False).start()
 
 
 class Test_ReverServer(unittest.TestCase):

@@ -6,8 +6,9 @@ from SimpleXMLRPCServer import SimpleXMLRPCServer
 
 class ReverServer(SimpleXMLRPCServer):
     '''a simple xmlrpc server that exposes a function to reverse a string'''
-    def __init__(self, host, port):
-        SimpleXMLRPCServer.__init__(self, (host, port))
+    def __init__(self, host, port, logRequests=True):
+        SimpleXMLRPCServer.__init__(self, (host, port),
+            logRequests=logRequests)
 
         self.done = False
 
