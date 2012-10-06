@@ -9,8 +9,8 @@ class ReverServer(SimpleXMLRPCServer):
     def __init__(self, host, port):
         SimpleXMLRPCServer.__init__(self, (host, port))
 
-        self.register_introspection_functions()
-        self.register_function(self.reverse, "reverse")
+        self.done = False
+
 
     @classmethod
     def reverse(cls, data):
@@ -19,7 +19,19 @@ class ReverServer(SimpleXMLRPCServer):
 
     def start(self):
         '''start spreading the news'''
-        self.serve_forever()
+        self.register_introspection_functions()
+        self.register_function(self.reverse, "reverse")
+        self.register_function(self.shutdown, "shutdown")
+
+        try:
+            while not self.done:
+                self.handle_request()
+        except:
+            pass
+
+    def shutdown(self):
+        self.done = True
+        return 0
 
 if __name__ == "__main__":
     SERVER = ReverServer("localhost", 6666)
