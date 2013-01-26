@@ -15,12 +15,14 @@ class Node:
     def __str__(self):
         return pformat("%d" % (self.value))
 
+
 class DuplicateValueException(BaseException):
     def __init__(self, value):
         self.value = value
 
     def __str__(self):
         return "Duplicate Value %d" % self.value
+
 
 class BTree(Node):
     def __init__(self, root):
@@ -31,23 +33,23 @@ class BTree(Node):
         if value == cur.value:
             raise DuplicateValueException(value)
         if value < cur.value:
-            if cur.left == None:
+            if cur.left is None:
                 cur.left = BTree(value)
             else:
                 cur.left.insert(value)
         if value > cur.value:
-            if cur.right == None:
+            if cur.right is None:
                 cur.right = BTree(value)
             else:
                 cur.right.insert(value)
 
     def dfs(self):
         cur = self
-        if cur.left != None:
+        if cur.left is not None:
             for l in cur.left.dfs():
                 yield l
         yield cur
-        if cur.right != None:
+        if cur.right is not None:
             for r in cur.right.dfs():
                 yield r
 

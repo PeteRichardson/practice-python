@@ -8,6 +8,7 @@ import copy
 
 logger = logging.getLogger(__name__)
 
+
 class Stack:
     '''Simple stack implementation'''
     def __init__(self):

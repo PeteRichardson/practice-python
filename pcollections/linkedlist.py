@@ -7,18 +7,17 @@ class Node:
         self.next = None
 
     def __str__(self):
-        if self.value == None:
+        if self.value is None:
             return "None"
         else:
             return str(self.value) + " -> "
-
 
 
 class LinkedList(Node):
 
     def append(self, value):
         end = self
-        while end.next != None:
+        while end.next is not None:
             end = end.next
         end.next = Node(value)
 
@@ -31,8 +30,8 @@ class LinkedList(Node):
     def find(self, value):
         cur = self
         if cur.value == value:
-            return cur 
-        while cur.next != None:
+            return cur
+        while cur.next is not None:
             cur = cur.next
             if cur.value == value:
                 return cur
@@ -40,7 +39,7 @@ class LinkedList(Node):
 
     def pop(self):
         result = self.value
-        if self.next != None:
+        if self.next is not None:
             self.value = self.next.value
             self.next = self.next.next
         else:
@@ -49,7 +48,6 @@ class LinkedList(Node):
 
     def __str__(self):
         result = Node.__str__(self)
-        while self.next != None:
+        while self.next is not None:
             result = result + self.next.__str__()
         return result
-        
