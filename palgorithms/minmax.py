@@ -48,4 +48,3 @@ def get_minmax(ints):
         current = nextitem
 
     return results
-
