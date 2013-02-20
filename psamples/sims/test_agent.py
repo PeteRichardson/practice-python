@@ -63,18 +63,22 @@ class Test_OldMan (unittest.TestCase):
         bob = OldMan('Bob', 100)
         for i in range(5):
             pete.greet(bob)
+        pete.start()
+        bob.start()
         self.assertEqual(0, bob.heard)
 
     def test_perfect_hearing_oldman(self):
         ''' test 0% message loss '''
         pete = Agent('Pete')
         bob = OldMan('Bob', 0)
-        for i in range(5):
+        for i in range(4):
             pete.greet(bob)
-        self.assertEqual(5, bob.heard)
+        pete.start()
+        bob.start()
+        self.assertEqual(4, bob.heard)
 
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger()
 
 if __name__ == "__main__":
