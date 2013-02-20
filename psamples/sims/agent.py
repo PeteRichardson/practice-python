@@ -14,7 +14,7 @@ class Message:
         self.agent = agent
         self.message = message
 
-    def str(self):
+    def __str__(self):
         '''String representation of this message'''
         return "{}: {}".format(self.agent.name, self.message)
 
@@ -63,6 +63,21 @@ class Agent(threading.Thread):
     def is_idle(self):
         '''Need to respond to anyone?'''
         return len(self.need_responses) == 0
+
+
+class OldMan (Agent):
+    ''' An old man is an agent that doesn't hear 100% of the time '''
+
+    def __init__(self, name, pct_missed):
+        Agent.__init__(self, name)
+        self.pct_missed = pct_missed / 100.0
+        LOGGER.debug("\tMisses {0}% of messages.".format(self.pct_missed))
+
+    def hear(self, message):
+        if random() <= self.pct_missed:
+            LOGGER.debug("missed message {0}".format(message))
+        else:
+            Agent.hear(self, message)
 
 if __name__ == "__main__":
     import unittest
