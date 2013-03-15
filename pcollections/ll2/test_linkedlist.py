@@ -15,6 +15,8 @@ class Test_LinkedList(unittest.TestCase):
         self.ll.append(6)
         self.assertEqual(5, self.ll.peek())
         self.assertEqual(3, len(self.ll))
+        self.assertEqual(4, self.ll.next.peek())
+        self.assertEqual(6, self.ll.next.next.peek())
 
     def test_len(self):
         self.ll.append(6)
@@ -30,6 +32,17 @@ class Test_LinkedList(unittest.TestCase):
         self.assertEqual(5, head_value)
         self.assertEqual(1, len(self.ll))
         self.assertEqual(4, self.ll.peek())
+
+    def test_pop_to_empty(self):
+        ll = LinkedList(5)
+        self.assertEqual(1, len(ll))
+        self.assertEqual(ll.next, None)
+        self.assertFalse(ll.isEmpty())
+        head_value = ll.pop()
+        self.assertEqual(head_value, 5)
+        self.assertEqual(0, len(ll))
+        self.assertEqual(ll.next, None)
+        self.assertTrue(ll.isEmpty())
 
     def test_isEmpty(self):
         ll = LinkedList()

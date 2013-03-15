@@ -30,7 +30,7 @@ class LinkedList:
         if self.isEmpty():
             self.value = value
         else:
-            new_node = LinkedList(self.value)
+            new_node = LinkedList(value)
             last_node = self.getLast()
             last_node.next = new_node
 
@@ -43,14 +43,15 @@ class LinkedList:
     def pop(self):
         ''' return the first value in the list and
             remove it from the list. '''
-        if self.value is None:
+        if self.isEmpty():
             raise ListEmptyError
-        if self.next is None:
-            return None
-        result = self.next
-        self.next = result.next
         tmp = self.value
-        self.value = result.value
+        if self.next is None:
+            self.value = None
+        else:
+            result = self.next
+            self.next = result.next
+            self.value = result.value
         return tmp
 
     def clear(self):
@@ -83,7 +84,8 @@ class LinkedList:
         return result
 
     def __str__(self):
-        return str(self.value)
+        return "->".join([str(item.value) for item in self])
+       #return str(self.value)
 
     def __add__(self, other):
         last_node = self.getLast()
@@ -92,7 +94,7 @@ class LinkedList:
 
 if __name__ == '__main__':
     ll = LinkedList(4)
-    ll.prepend(5)
+    ll.append(5)
     for item in ll:
         print item
     print len(ll)
