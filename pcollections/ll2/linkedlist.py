@@ -53,8 +53,12 @@ class LinkedList:
         self.value = result.value
         return tmp
 
+    def clear(self):
+        self.next = None
+        self.value = None
+
     def isEmpty(self):
-        return self.value is None
+        return (self.value is None) and (self.next is None)
 
     def getLast(self):
         last_node = None

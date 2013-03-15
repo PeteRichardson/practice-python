@@ -48,5 +48,16 @@ class Test_LinkedList(unittest.TestCase):
         ll = ll + ll2
         self.assertEqual(5, len(ll))
 
+    def test_clear(self):
+        self.assertFalse(self.ll.isEmpty())
+        self.assertTrue(len(self.ll) == 2)
+        self.ll.clear()
+        self.assertTrue(self.ll.isEmpty())
+
+    def test_clear_empty_list(self):
+        ll = LinkedList()
+        ll.clear()
+        self.assertTrue(ll.isEmpty())
+
 if __name__ == '__main__':
     unittest.main()
