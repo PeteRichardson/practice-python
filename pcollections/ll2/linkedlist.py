@@ -71,7 +71,7 @@ class LinkedList:
             yield head
 
     def __len__(self):
-        if self.value is None:
+        if self.isEmpty():
             return 0
         result = 0
         for item in self:
