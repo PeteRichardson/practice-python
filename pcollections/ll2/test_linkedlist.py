@@ -83,5 +83,56 @@ class Test_LinkedList(unittest.TestCase):
         ll.clear()
         self.assertTrue(ll.isEmpty())
 
+    def test_reversed(self):
+        ll = LinkedList(7)
+        ll.append(8)
+        ll.append(9)
+        self.assertEqual(3, len(ll))
+        self.assertEqual(7, ll.peek())
+        self.assertEqual("7->8->9", str(ll))
+        rev = ll.reversed()
+        self.assertEqual("9->8->7", str(rev))
+        self.assertEqual(9, rev.peek())
+        self.assertEqual(3, len(ll))
+        self.assertEqual(7, ll.peek())
+        self.assertEqual("7->8->9", str(ll))
+
+    def test_reverse(self):
+        ll = LinkedList(7)
+        ll.append(8)
+        ll.append(9)
+        self.assertEqual(3, len(ll))
+        self.assertEqual(7, ll.peek())
+        self.assertEqual("7->8->9", str(ll))
+        ll.reverse()
+        self.assertEqual("9->8->7", str(ll))
+        self.assertEqual(9, ll.peek())
+
+    def test_reverse_double(self):
+        ll = LinkedList(45)
+        ll.append(46)
+        self.assertEqual(2, len(ll))
+        self.assertEqual(45, ll.peek())
+        self.assertEqual("45->46", str(ll))
+        ll.reverse()
+        self.assertEqual(2, len(ll))
+        self.assertEqual(46, ll.peek())
+        self.assertEqual("46->45", str(ll))
+
+
+    def test_reverse_single(self):
+        ll = LinkedList(358)
+        self.assertEqual(358, ll.peek())
+        self.assertEqual(1, len(ll))
+        ll.reverse()
+        self.assertEqual(358, ll.peek())
+        self.assertEqual(1, len(ll))
+
+    def test_reverse_empty(self):
+        ll = LinkedList()
+        self.assertTrue(ll.isEmpty())
+        ll.reverse()
+        self.assertTrue(ll.isEmpty())
+
 if __name__ == '__main__':
     unittest.main()

@@ -58,6 +58,24 @@ class LinkedList:
         self.next = None
         self.value = None
 
+    def reversed(self):
+        ''' returns a copy of the list, but reversed.  
+            Doesn't affect the current object '''
+        result = LinkedList()
+        for item in self:
+            result.prepend(item.value)
+        return result
+
+    def reverse(self):
+        ''' reverses the list in place.  reversing an
+            empty list is a NOP '''
+        if self.isEmpty() or len(self) <= 1:
+            return
+        rev = self.reversed()
+        self.value = rev.value
+        self.next = rev.next
+        rev = None
+
     def isEmpty(self):
         return (self.value is None) and (self.next is None)
 
