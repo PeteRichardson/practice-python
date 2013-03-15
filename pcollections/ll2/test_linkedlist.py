@@ -11,6 +11,17 @@ class Test_LinkedList(unittest.TestCase):
         self.assertEqual(5, self.ll.peek())
         self.assertEqual(2, len(self.ll))
 
+    def test_prepend(self):
+        ll = LinkedList(3)
+        self.assertEqual(1, len(ll))
+        self.assertEqual(3, ll.peek())
+        ll.prepend(2)
+        self.assertEqual(2, len(ll))
+        self.assertEqual(2, ll.peek())
+        ll.prepend(1)
+        self.assertEqual(3, len(ll))
+        self.assertEqual(1, ll.peek())
+
     def test_append(self):
         self.ll.append(6)
         self.assertEqual(5, self.ll.peek())

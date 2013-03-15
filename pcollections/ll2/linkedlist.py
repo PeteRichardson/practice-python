@@ -22,7 +22,7 @@ class LinkedList:
             self.value = value
         else:
             new_node = LinkedList(self.value)
-            new_node._next = self.next
+            new_node.next = self.next
             self.next = new_node
             self.value = value
 
