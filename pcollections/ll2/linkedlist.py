@@ -1,7 +1,15 @@
+''' linkedlist.py - a LinkedList class '''
+
+
 class ListEmptyError(ValueError):
+    ''' An error to raise when an operation fails because it needs
+        a non-empty list (e.g.  pop()) '''
     pass
 
+
 class LinkedList:
+    ''' an object that represents an element and the head of a linked
+        list. '''
     def __init__(self, value=None):
         self.value = value
         self.next = None
@@ -23,9 +31,7 @@ class LinkedList:
             self.value = value
         else:
             new_node = LinkedList(self.value)
-            last_node = None
-            for item in self:
-                last_node = item
+            last_node = self.getLast()
             last_node.next = new_node
 
     def peek(self):
@@ -35,6 +41,8 @@ class LinkedList:
         self.prepend(value)
 
     def pop(self):
+        ''' return the first value in the list and
+            remove it from the list. '''
         if self.value is None:
             raise ListEmptyError
         if self.next is None:
@@ -47,9 +55,15 @@ class LinkedList:
 
     def isEmpty(self):
         return self.value is None
-        #return len(self) == 0
+
+    def getLast(self):
+        last_node = None
+        for item in self:
+            last_node = item
+        return last_node
 
     def __iter__(self):
+        ''' yield each of the list items in order '''
         head = self
         yield head
         while head.next is not None:
@@ -66,6 +80,11 @@ class LinkedList:
 
     def __str__(self):
         return str(self.value)
+
+    def __add__(self, other):
+        last_node = self.getLast()
+        last_node.next = other
+        return self
 
 if __name__ == '__main__':
     ll = LinkedList(4)

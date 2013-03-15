@@ -39,5 +39,14 @@ class Test_LinkedList(unittest.TestCase):
         ll = LinkedList()
         self.assertRaises(ListEmptyError, ll.pop)
 
+    def test_add(self):
+        ll = LinkedList(4)
+        ll.append(6)
+        ll2 = LinkedList(10)
+        ll2.append(12)
+        ll2.append(13)
+        ll = ll + ll2
+        self.assertEqual(5, len(ll))
+
 if __name__ == '__main__':
     unittest.main()
