@@ -150,4 +150,19 @@ if __name__ == '__main__':
             self.assertEqual(last, 6)
             self.assertEqual(ll.peek(), 4)
 
-    unittest.main()
+    import cmd
+
+    class Shell(cmd.Cmd):
+        def __init__(self):
+            cmd.Cmd.__init__(self)
+            self.prompt = "LinkedList test shell> "
+            self.intro = '''Welcome to the LinkedList test shell.\nType ? for valid commands'''
+
+        def do_test(self, line):
+            unittest.main()
+
+        def do_EOF(self, line):
+            print "Exiting."
+            return True
+
+    Shell().cmdloop()
