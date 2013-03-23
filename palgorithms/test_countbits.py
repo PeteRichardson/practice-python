@@ -21,7 +21,7 @@ class TestCountbits(unittest.TestCase):
 
     def test_all(self):
         '''countbits - count bits in lots of numbers '''
-        for n in range(0, 2 ** 5):
+        for n in range(0, 2 ** 9):
             self.assertEqual(countbits(n), countbits2(n))
 
 
