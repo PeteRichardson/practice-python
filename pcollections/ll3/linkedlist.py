@@ -92,8 +92,18 @@ if __name__ == '__main__':
             ll.append(5)
             ll.append(6)
             self.assertEqual(len(ll), 2)
-            self.assertEqual(ll.value, 5)
-            self.assertEqual(ll.next.value, 6)
+            self.assertEqual(ll.peek(), 5)
+            self.assertEqual(ll.next.peek(), 6)
+
+        def test_prepend(self):
+            ll = LinkedList()
+            ll.prepend(5)
+            self.assertEqual(len(ll), 1)
+            self.assertEqual(ll.peek(), 5)
+            ll.prepend(4)
+            self.assertEqual(len(ll), 2)
+            self.assertEqual(ll.peek(), 4)
+            self.assertEqual(ll.next.peek(), 5)
 
         def test_zero_len(self):
             ll = LinkedList()
