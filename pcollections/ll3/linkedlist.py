@@ -35,11 +35,9 @@ class LinkedList:
         if self.value is None:
             result = 0
         else:
-            result = 1
-            temp_head = self
-            while temp_head.next is not None:
+            result = 0
+            for item in self:
                 result += 1
-                temp_head = temp_head.next
         return result
 
     def is_empty(self):
@@ -77,9 +75,14 @@ class LinkedList:
     def __iter__(self):
         new_head = self
         while new_head is not None:
-            yield new_head.value
+            yield new_head
             new_head = new_head.next
 
+    def get_last(self):
+        result = None
+        for item in self:
+            result = item
+        return result
 
 if __name__ == '__main__':
 
@@ -120,12 +123,31 @@ if __name__ == '__main__':
 
         def test_pop(self):
             ll = LinkedList(4)
-            self.assertEqual(len(ll), 1)
+            ll.append(3)
+            self.assertEqual(len(ll), 2)
             head = ll.pop()
             self.assertEqual(head, 4)
-            #import pdb
-            #pdb.set_trace()
-            self.assertEqual(ll.peek(), None)
-            self.assertEqual(len(ll), 0)
+            self.assertEqual(ll.peek(), 3)
+            self.assertEqual(len(ll), 1)
+            head = ll.pop()
+            self.assertEqual(head, 3)
+
+        def test_iter(self):
+            ll = LinkedList(4)
+            ll.append(5)
+            ll.append(6)
+            count = 0
+            for item in ll:
+                count += 1
+            self.assertEqual(count, 3)
+            self.assertEqual(ll.peek(), 4)
+
+        def test_get_last(self):
+            ll = LinkedList(4)
+            ll.append(5)
+            ll.append(6)
+            last = ll.get_last().peek()
+            self.assertEqual(last, 6)
+            self.assertEqual(ll.peek(), 4)
 
     unittest.main()
