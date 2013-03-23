@@ -62,11 +62,15 @@ class LinkedList:
 
     def __str__(self):
         sb = []
-        if not self.is_empty():
-            sb.append(str(self.peek()))
+        if self.is_empty():
+            return ""
         temp_head = self
         while temp_head.next is not None:
-            sb.append(temp_head.value)
+            #print "appending...", temp_head.value
+            sb.append(str(temp_head.value))
+            temp_head = temp_head.next
+        if temp_head.value is not None:
+            sb.append(str(temp_head.value))
         return "->".join(sb)
 
     def __repr__(self):
@@ -161,8 +165,17 @@ if __name__ == '__main__':
         def do_test(self, line):
             unittest.main()
 
+        def do_dbg(self, line):
+            ll = LinkedList(4)
+            ll.append(5)
+            ll.append(6)
+            import pdb
+            pdb.set_trace()
+
         def do_EOF(self, line):
             print "Exiting."
             return True
+        do_exit = do_EOF
+        do_quit = do_EOF
 
     Shell().cmdloop()
