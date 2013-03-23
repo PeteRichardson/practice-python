@@ -58,16 +58,21 @@ class LinkedList:
         if self.next is not None:
             self.value = self.next.value
             self.next = self.next.next
+        else:
+            self.value = None
         return result
 
-    def str(self):
+    def __str__(self):
         sb = []
         if not self.is_empty():
-            sb.append(self.peek())
+            sb.append(str(self.peek()))
         temp_head = self
         while temp_head.next is not None:
             sb.append(temp_head.value)
         return "->".join(sb)
+
+    def __repr__(self):
+        return self.__str__()
 
     def __iter__(self):
         new_head = self
@@ -112,5 +117,15 @@ if __name__ == '__main__':
             self.assertEqual(len(ll), 1)
             ll.prepend(8)
             self.assertEqual(len(ll), 2)
+
+        def test_pop(self):
+            ll = LinkedList(4)
+            self.assertEqual(len(ll), 1)
+            head = ll.pop()
+            self.assertEqual(head, 4)
+            #import pdb
+            #pdb.set_trace()
+            self.assertEqual(ll.peek(), None)
+            self.assertEqual(len(ll), 0)
 
     unittest.main()
