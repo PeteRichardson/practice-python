@@ -17,10 +17,10 @@ def bubblesort(array):
     item_swapped = True
     while item_swapped:
         item_swapped = False
-        for n in range(0, len(array_copy) - 1):
+        for n in xrange(0, len(array_copy) - 1):
             if array_copy[n] > array_copy[n + 1]:
                 item_swapped = True
-                logger.debug("swapping %d [%s] with %d [%s]" %
+                logger.debug("swapping {0} [{1}] with {2} [{3}]".format
                             (n, str(array_copy[n]), n + 1, str(array_copy[n + 1])))
                 array_copy[n], array_copy[n + 1] = array_copy[n + 1], array_copy[n]
     return array_copy
