@@ -48,7 +48,7 @@ class Worker(threading.Thread):
                 delay = sleep_random(self.MAX_SLEEP)
             else:
                 message = self.workqueue.get()
-                LOGGER.debug("Hi, {}. message = {}.  Queue depth: {}".format(self.name, message, self.workqueue.qsize()))
+                LOGGER.debug("Handling message = {}.  Queue depth: {}".format(message, self.workqueue.qsize()*"*"))
                 delay = sleep_random(self.MAX_SLEEP/2)
 
         LOGGER.info("{} committing suicide.".format(self.name))
@@ -59,6 +59,7 @@ class ThreadPool(threading.Thread):
         threading.Thread.__init__(self)
         self.workers = []
         self.workqueue = workqueue
+        self.should_quit = False
 
     def add_worker(self):
         new_worker = Worker(len(self.workers)+1, self.workqueue, self.too_many_workers)
@@ -82,9 +83,12 @@ class ThreadPool(threading.Thread):
             if not worker.isAlive():
                 self.workers.remove(worker)
 
+    def quit(self):
+        self.should_quit = True
+
     def run(self):
-        while True:
-            sleep(1)
+        while not self.should_quit:
+            sleep(.5)
             self.adjust_pool_size()
 
 
@@ -95,13 +99,25 @@ class App(threading.Thread):
         self.workqueue = Queue()
         self.threadpool = ThreadPool(self.workqueue)
 
+    def time_to_quit(self, quit):
+        if not self.threadpool.optimal_worker_count():
+            result = quit + 1
+        else:
+            result = 0
+        return result
+
+
     def run(self):
         self.threadpool.start()
         Adder(40, self.workqueue).start()  # add 10 items
+        quit = 0
         while True:
             sleep(1)
-            LOGGER.debug("HEARTBEAT: Workers: {}, Queue depth: {}".format(self.threadpool.worker_count(), self.workqueue.qsize()))
-
+            LOGGER.debug("HEARTBEAT: Workers: {}.        Queue depth: {}".format(self.threadpool.worker_count(), self.workqueue.qsize()*"*"))
+            quit = self.time_to_quit(quit)
+            if quit > 4:
+                break
+        self.threadpool.quit()
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
