@@ -5,6 +5,8 @@ import sys
 from collections import Counter
 import logging
 import re
+import mmap
+import contextlib
 
 
 def get_file_list(top):
@@ -17,18 +19,21 @@ def get_file_list(top):
 
 def imports_from_file(filename):
     logging.debug("# parsing {}".format(filename))
-    f = open(filename, "r")
-    lines = f.readlines()
-    results = [tup[0] or tup[1] for tup in re.findall(r"from (\w+) import|import (\w+)", " ".join(lines))]
+    if not os.stat(filename).st_size:
+        return []
+
+    f = open(filename, "r+")
+    with contextlib.closing(mmap.mmap(f.fileno(), 0)) as mapped_file:
+        results = [tup[0] or tup[1] for tup in re.findall(r"from\s+(\w+)\s+import|import\s+(\w+)", mapped_file)]
     return results
 
 
 def main(top):
     counter = Counter()
-    assert(os.path.exists(top))
+    assert os.path.exists(top), "# FATAL ERROR: {top} doesn't exist!"
     for filename in get_file_list(top):
         logging.debug("# parsing {}".format(filename))
-        assert(os.path.exists(filename))
+        assert os.path.exists(filename), "# FATAL ERROR: {filename} doesn't exist!"
         imports = imports_from_file(filename)
         counter.update(imports)
     print counter.most_common(5)
@@ -38,4 +43,4 @@ def main(top):
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
 
-    sys.exit(main("/Users/pete/projects/practice/practice-python/"))
+    sys.exit(main("/Users/pete/projects/practice/"))
