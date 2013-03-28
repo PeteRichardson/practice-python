@@ -5,10 +5,13 @@
 import fileinput
 import re
 import sys
-import glob 
+import optparse
 
-pattern = ".*"+sys.argv[1]+".*"
 
-for line in fileinput.input(sys.argv[2:]):
-    if re.match(pattern, line):
+parser = optparse.OptionParser()
+parser.add_option('-p', action="store", dest="pattern")
+options, remainder = parser.parse_args(sys.argv)
+
+for line in fileinput.input(remainder):
+    if re.match(options.pattern, line):
         print "{0:20}: {1}".format(fileinput.filename(), line.strip())
