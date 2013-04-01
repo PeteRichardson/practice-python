@@ -4,29 +4,30 @@
 
 import unittest
 
-
-def countbits(value):
+def countbits(value, nbits=64, use_lookup=True):
     ''' count bits by shifting one at a time '''
     if not isinstance(value, int):
         raise TypeError("countbits requires an integer")
+
+    if abs(value) > 1 << nbits:
+        raise RuntimeError("wordsize not big enough to hold value")
+
     bitcount = 0
-    while value:
-        bitcount += (value & 0x1)
-        value >>= 1
-    return bitcount
 
-
-def countbits2(value):
-    ''' count bits by shifting 4 at a time '''
+    # for negative number, limit bits to a given number
+    # otherwise sign bit is extended when right shifting, and
+    # the while loop will never end
+    if value < 0:
+        value &= (1 << nbits) - 1
 
     lookup_table = [0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4]
-
-    if not isinstance(value, int):
-        raise TypeError("countbits2 requires an integer")
-    bitcount = 0
     while value:
-        bitcount += lookup_table[value & 0xF]
-        value >>= 4
+        if use_lookup:
+            bitcount += lookup_table[value & 0xF]
+            value >>= 4
+        else:
+            bitcount += value & 0x1
+            value >>= 1
     return bitcount
 
 
@@ -41,37 +42,41 @@ class CountbitsTests(unittest.TestCase):
     def test_simple(self):
         '''count bits in a simple number '''
         self.assertEqual(2, countbits(3))
-        self.assertEqual(2, countbits2(3))
+        self.assertEqual(2, countbits(3, use_lookup=False))
 
     def test_zero(self):
         '''count bits in a simple number '''
         self.assertEqual(0, countbits(0))
-        self.assertEqual(0, countbits2(0))
+        self.assertEqual(0, countbits(0, use_lookup=False))
+
+    def test_None(self):
+        with self.assertRaises(TypeError):
+            countbits(None)
+        with self.assertRaises(TypeError):
+            countbits(None, use_lookup=False)
+
+    def test_negative(self):
+        self.assertEqual(64, countbits(-1))
+        self.assertEqual(64, countbits(-1, use_lookup=False))
+
+    def test_negative_with_limited_bits(self):
+        self.assertEqual(4, countbits(-1, 4))
+        self.assertEqual(4, countbits(-1, 4, use_lookup=False))
+        self.assertEqual(5, countbits(-1, 5))
+        self.assertEqual(5, countbits(-1, 5, use_lookup=False))
+
+    def test_positive_with_limited_bits(self):
+        self.assertEqual(3, countbits(7, 5))
+
+    def test_fail_if_not_enough_bits(self):
+        with self.assertRaises(RuntimeError):
+            countbits(7, 2)
 
     def test_all(self):
         '''count bits in lots of numbers '''
-        for n in range(0, 2 ** 9):
-            self.assertEqual(countbits(n), countbits2(n))
+        for n in range(-(2**9), 2**9):
+            self.assertEqual(countbits(n), countbits(n, use_lookup=False))
 
 
 if __name__ == '__main__':
-
-    from cmd import Cmd
-
-    class Shell(Cmd):
-        def __init__(self):
-            Cmd.__init__(self)
-            self.prompt = "Countbits test shell> "
-            self.intro = "Welcome to the Countbits test shell.\nTry 'test' or ? for other commands"
-
-        def do_test(self, line):
-            verbosity = int(line or 1)
-            selftest(verbosity=verbosity)
-            return False
-
-        def do_EOF(self, line):
-            return True
-        do_exit = do_EOF
-        do_quit = do_EOF
-
-    Shell().cmdloop()
+    unittest.main()
