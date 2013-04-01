@@ -9,6 +9,10 @@ def get_makefiles(top):
                 yield os.path.join(root, f)
 
 
+def fix_line(line):
+    return line.replace("prometheus", "CE")
+
+
 def edit_in_place(file, backup_extension=".bak"):
     assert os.path.exists(file), "ERROR: file {0} doesn't exist!".format(file)
     saved_file = file + backup_extension
@@ -17,11 +21,11 @@ def edit_in_place(file, backup_extension=".bak"):
     assert os.path.exists(saved_file)
     assert not os.path.exists(file)
     new_file = open(file, "w")
-    for line in open(saved_file, "r").readlines():
-        line = line.replace("prometheus", "CE")
+    for line in open(saved_file):
+        line = fix_line(line)
         logging.debug("modified line is {0}".format(line))
         new_file.write(line)
-    #close(new_file)
+    new_file.close()
     logging.debug("# closed {0}".format(new_file))
 
 
