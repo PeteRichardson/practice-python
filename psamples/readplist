@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+
+# readplist - quick program to dump the creation attributes and values
+#             from a VolumeConfiguration.plist file
+
+import sys
+import os
+import logging
+import xml.etree.ElementTree as ET
+
+toolname = os.path.basename(sys.argv[0])
+logging.basicConfig(level=logging.DEBUG, format='{0} [%(levelname)s]: %(message)s'.format(toolname))
+logger = logging.getLogger(toolname)
+
+
+if len(sys.argv) != 2:
+	print "Usage: {0} <plist filepath>".format(toolname)
+	sys.exit(1)
+
+plistfile = sys.argv[1]
+logger.debug("Dumping plist file: {0}".format(plistfile))
+tree = ET.parse(os.path.realpath(plistfile))
+root = tree.getroot()
+
+havekey = False
+for item in root.find('dict/dict/dict'):
+	if item.tag == 'key':
+		assert havekey == False, 'Expected pairs of elements... look for key {0}'.format(item.text)
+		havekey = True
+		key = item.text
+	else:
+		havekey = False
+		print "{0:50}: {1}".format(key, item.tag.capitalize())
+		key = ''
+
